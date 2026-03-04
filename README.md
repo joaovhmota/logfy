@@ -18,6 +18,9 @@ cargo add logfy --git https://github.com/joaovhmota/logfy.git --branch main
 
 ## 🖥️ Usage 
 
+> [!WARNING]
+> DEBUG logs will not be printed when running in RELEASE mode.
+
 There are currently five macros available for logging:
 
 ```rust
