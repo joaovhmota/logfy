@@ -21,35 +21,43 @@ jobs:
           - beta
           - nightly
 
+    continue-on-error: ${{ matrix.toolchain == 'nightly' }}
+
     steps:
-      - name: 📥 Repository Checkout
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🦀 Install Rust (${{ matrix.toolchain }})
+      - name: 🦀 Setup
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           override: true
           components: rustfmt, clippy
 
-      - name: ⚡ Cargo Cache
+      - name: ⚡ Cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
+            target/${{ matrix.toolchain }}
           key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: 🎨 Check Formatting
-        continue-on-error: false
+      - name: 🎨 Formatting
         run: cargo fmt -- --check
 
-      - name: 🏗️ Build Application
-        continue-on-error: false
+      - name: 📋 Check
+        if: matrix.toolchain != 'stable'
+        run: cargo check --verbose
+
+      - name: 🧪 Test
+        if: matrix.toolchain == 'stable'
+        run: cargo test --verbose
+
+      - name: 🏗️ Build
+        if: matrix.toolchain == 'stable'
         run: cargo build --verbose
 
       - name: 🔍 Clippy
-        continue-on-error: false
         if: matrix.toolchain == 'stable'
         run: cargo clippy -- -D warnings
