@@ -10,7 +10,7 @@ Logfy is designed to be simple and unopinionated. It does not provide log filter
 
 ## 📦 Installation
 
-Since this crate is not published on [crates.io](crates.io), you can run the following command to add it into your project:
+Since this crate is not published on [crates.io](https://crates.io/), you can run the following command to add it into your project:
 
 ```bash
 cargo add logfy --git https://github.com/joaovhmota/logfy.git --branch main
