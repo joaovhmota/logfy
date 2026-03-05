@@ -1,4 +1,5 @@
 name: 🦀 Continuous Integration
+run-name: "🛠️ Run №${{ github.run_number }}, ${{ github.event_name }} by ${{ github.actor }} (Attempt №${{ github.run_attempt }})"
 
 on:
   push:
