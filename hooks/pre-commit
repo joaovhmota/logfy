@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+echo "🔍 Running pre-commit…"
+
+echo "🎨 Formatting code…"
+cargo fmt
+
+echo "📦 Checking Build…"
+cargo fmt -- --check
+
+echo "📎 Running clippy…"
+cargo clippy -- -D warnings
+
+echo "🧪 Running tests…"
+cargo test --quiet
+
+echo "✅ Eveything OK in pre-commit"

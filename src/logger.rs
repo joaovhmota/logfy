@@ -10,7 +10,7 @@ pub fn handle_logging(level: LogLevel, message: Arguments) {
         .format("[%d/%m/%Y %H:%M:%S]")
         .to_string()
         .bright_black();
-    let colored_label = level.get_colored_label();
+    let colored_label = level.build();
     let colored_message = message.to_string().bright_white();
 
     println!("{colored_time} {colored_label} {colored_message}");

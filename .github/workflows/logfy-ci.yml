@@ -1,23 +1,22 @@
-name: 🦀 Continuous Integration
-run-name: "🛠️ Run №${{ github.run_number }}, ${{ github.event_name }} by ${{ github.actor }} (Attempt №${{ github.run_attempt }})"
+name: logfy-ci
 
 on:
   push:
     paths:
-      - 'src/**'
-      - '.github/**'
-      - 'Cargo.toml'
-      - 'Cargo.lock'
+      - "src/**"
+      - ".github/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
   pull_request:
     paths:
-      - 'src/**'
-      - '.github/**'
-      - 'Cargo.toml'
-      - 'Cargo.lock'
+      - "src/**"
+      - ".github/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
 
 jobs:
   build:
-    name: 🛠️ Toolchain Version — ${{ matrix.toolchain }}
+    name: Toolchain Version — ${{ matrix.toolchain }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -31,17 +30,17 @@ jobs:
     continue-on-error: ${{ matrix.toolchain == 'nightly' }}
 
     steps:
-      - name: 📥 Checkout
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 🦀 Setup
+      - name: Setup
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           override: true
           components: rustfmt, clippy
 
-      - name: ⚡ Cache
+      - name: Cache
         uses: actions/cache@v4
         with:
           path: |
@@ -50,21 +49,21 @@ jobs:
             target/${{ matrix.toolchain }}
           key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: 🎨 Formatting
+      - name: Formatting
         run: cargo fmt -- --check
 
-      - name: 📋 Check
+      - name: Check
         if: matrix.toolchain != 'stable'
         run: cargo check --verbose
 
-      - name: 🧪 Test
+      - name: Test
         if: matrix.toolchain == 'stable'
         run: cargo test --verbose
 
-      - name: 🏗️ Build
+      - name: Build
         if: matrix.toolchain == 'stable'
         run: cargo build --verbose
 
-      - name: 🔍 Clippy
+      - name: Clippy
         if: matrix.toolchain == 'stable'
         run: cargo clippy -- -D warnings
