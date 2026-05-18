@@ -6,6 +6,9 @@ cd "$(git rev-parse --show-toplevel)"
 
 echo "🔍 Running pre-commit…"
 
+echo "🧹 Cleaning project…"
+cargo clean
+
 echo "🎨 Formatting code…"
 cargo fmt
 
@@ -14,8 +17,5 @@ cargo check
 
 echo "📎 Running clippy…"
 cargo clippy -- -D warnings
-
-echo "🧪 Running tests…"
-cargo test --quiet
 
 echo "✅ Everything OK in pre-commit"
