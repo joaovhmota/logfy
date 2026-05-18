@@ -6,9 +6,6 @@ cd "$(git rev-parse --show-toplevel)"
 
 echo "🔍 Running pre-commit…"
 
-echo "🧹 Cleaning project…"
-cargo clean
-
 echo "🎨 Formatting code…"
 cargo fmt
 
